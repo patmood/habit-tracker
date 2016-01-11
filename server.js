@@ -11,7 +11,29 @@ app.use(function * (next) {
 })
 
 app.use(route.get('/', function * () {
-  this.body = 'hello'
+  this.body = `
+  <!DOCTYPE html>
+  <html>
+    <head><title>Hello World</title></head>
+    <body>
+      <h1>Habit Tracker</h1>
+      <div id="app"></div><script src="/bundle.js"></script>
+    </body>
+  </html>
+`
 }))
 
-app.listen(7777, () => console.info('🌎 Listening on 7777'))
+// Static assets
+if (process.env.NODE_ENV === 'production') {
+  app.use(require('koa-static')('./public'))
+} else {
+  // Proxy to webpack
+  const staticProxy = require('koa-proxy')({
+    host: 'http://localhost:8080',
+    map: (path) => '/public/' + path,
+  })
+  app.use(route.get('/:path', staticProxy))
+}
+
+const port = process.env.PORT || 7777
+app.listen(port, () => console.info('🌎 Listening on ' + port))
