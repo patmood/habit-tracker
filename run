@@ -12,9 +12,9 @@ export PATH="./node_modules/.bin:$PATH"
 
 
 function db-reset {
-  cat db/reset.sql | psql
-  cat db/schema.sql | psql habit_tracker
-  node db/seed.js
+  cat reset.sql | psql
+  cat schema.sql | psql habit_tracker
+  node db.js
 }
 
 function help {

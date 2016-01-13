@@ -1,5 +1,6 @@
 const koa = require('koa')
 const route = require('koa-route')
+const db = require('./db')
 
 const app = koa()
 
@@ -11,6 +12,10 @@ app.use(function * (next) {
 })
 
 app.use(route.get('/', function * () {
+  const journals = yield db.allJournals()
+  const props = {
+    journals: journals[0]
+  }
   this.body = `
   <!DOCTYPE html>
   <html>
@@ -19,8 +24,8 @@ app.use(route.get('/', function * () {
       <link href="/basscss.min.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-      <h1>Habit Tracker</h1>
       <div id="app"></div>
+      <script>props=${JSON.stringify(props)}</script>
       <script src="/bundle.js"></script>
     </body>
   </html>

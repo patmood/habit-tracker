@@ -1,5 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Component from './components/component'
+import Container from './components/container'
 
-ReactDOM.render(<Component />, document.getElementById('app'))
+ReactDOM.render(<Container {...window.props}/>, document.getElementById('app'))
