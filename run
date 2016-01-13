@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# To use:
+# ./run watch
+# wach -o dist/js/bundle.js 'rld chrome'
+
+# unofficial "strict mode": http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
+
+export PATH="./node_modules/.bin:$PATH"
+
+
+function db-reset {
+  cat db/reset.sql | psql
+  cat db/schema.sql | psql habit_tracker
+  node db/seed.js
+}
+
+function help {
+  echo instructions
+}
+
+eval "${1-help}"

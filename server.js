@@ -14,10 +14,14 @@ app.use(route.get('/', function * () {
   this.body = `
   <!DOCTYPE html>
   <html>
-    <head><title>Hello World</title></head>
+    <head>
+      <title>Hello World</title>
+      <link href="/basscss.min.css" rel="stylesheet" type="text/css" />
+    </head>
     <body>
       <h1>Habit Tracker</h1>
-      <div id="app"></div><script src="/bundle.js"></script>
+      <div id="app"></div>
+      <script src="/bundle.js"></script>
     </body>
   </html>
 `
